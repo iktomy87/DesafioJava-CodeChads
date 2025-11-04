@@ -46,9 +46,24 @@ public class ReporteServicioImpl implements IReporteService {
     }
 
     @Override
-    public void exportarInvestigadoresCSV(String rutaArchivo) {
+    public void exportarInvestigadoresCSV(String nombreBaseArchivo) {
         List<Investigador> investigadores = investigadorRepository.obtenerTodos();
-        try (PrintWriter pw = new PrintWriter(new FileWriter(rutaArchivo))) {
+
+        // REQUISITO 1: Validar que la lista no esté vacía
+        if (investigadores.isEmpty()) {
+            System.out.println("No hay investigadores registrados para exportar.");
+            return; // Detiene la ejecución del método
+        }
+
+        // REQUISITO 2: Asegurar la extensión .csv
+        String nombreArchivoCompleto;
+        if (nombreBaseArchivo.endsWith(".csv")) {
+            nombreArchivoCompleto = nombreBaseArchivo;
+        } else {
+            nombreArchivoCompleto = nombreBaseArchivo + ".csv";
+        }
+
+        try (PrintWriter pw = new PrintWriter(new FileWriter(nombreArchivoCompleto))) {
             pw.println("nombre,edad,cantidad de experimentos");
             for (Investigador inv : investigadores) {
                 pw.printf("%s,%d,%d\n",
@@ -56,7 +71,8 @@ public class ReporteServicioImpl implements IReporteService {
                         inv.getEdad(),
                         inv.getCantidadExperimentos());
             }
-            System.out.println("Investigadores exportados correctamente a " + rutaArchivo);
+            // Usamos la variable con el nombre completo
+            System.out.println("Investigadores exportados correctamente a " + nombreArchivoCompleto);
         } catch (IOException e) {
             System.err.println("Error al exportar a CSV: " + e.getMessage());
         }
@@ -97,6 +113,10 @@ public class ReporteServicioImpl implements IReporteService {
     }
 
     private double getPorcentajeExito(List<Experimento> experimentos) {
+        // Añadida validación para evitar división por cero si la lista está vacía
+        if (experimentos.isEmpty()) {
+            return 0.0;
+        }
         long exitosos = experimentos.stream()
                 .filter(e -> e.getResultado() == ResultadoExperimento.EXITO)
                 .count();

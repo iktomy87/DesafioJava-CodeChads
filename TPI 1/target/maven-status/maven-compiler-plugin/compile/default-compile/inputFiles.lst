@@ -3,6 +3,9 @@ C:\Users\Usuario\Desktop\Proyectos\Informatorio 2025\Java\Tareas\Desafios\TPI 1\
 C:\Users\Usuario\Desktop\Proyectos\Informatorio 2025\Java\Tareas\Desafios\TPI 1\src\main\java\com\laboratorio\dominio\ExperimentoQuimico.java
 C:\Users\Usuario\Desktop\Proyectos\Informatorio 2025\Java\Tareas\Desafios\TPI 1\src\main\java\com\laboratorio\dominio\Investigador.java
 C:\Users\Usuario\Desktop\Proyectos\Informatorio 2025\Java\Tareas\Desafios\TPI 1\src\main\java\com\laboratorio\dominio\ResultadoExperimento.java
+C:\Users\Usuario\Desktop\Proyectos\Informatorio 2025\Java\Tareas\Desafios\TPI 1\src\main\java\com\laboratorio\interfaces\IExperimentoService.java
+C:\Users\Usuario\Desktop\Proyectos\Informatorio 2025\Java\Tareas\Desafios\TPI 1\src\main\java\com\laboratorio\interfaces\IInvestigadorService.java
+C:\Users\Usuario\Desktop\Proyectos\Informatorio 2025\Java\Tareas\Desafios\TPI 1\src\main\java\com\laboratorio\interfaces\IReporteService.java
 C:\Users\Usuario\Desktop\Proyectos\Informatorio 2025\Java\Tareas\Desafios\TPI 1\src\main\java\com\laboratorio\Main.java
 C:\Users\Usuario\Desktop\Proyectos\Informatorio 2025\Java\Tareas\Desafios\TPI 1\src\main\java\com\laboratorio\repository\experimento\ExperimentoRepository.java
 C:\Users\Usuario\Desktop\Proyectos\Informatorio 2025\Java\Tareas\Desafios\TPI 1\src\main\java\com\laboratorio\repository\experimento\impl\ExperimentoRepositoryImpl.java

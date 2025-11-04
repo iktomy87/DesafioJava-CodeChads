@@ -3,17 +3,15 @@ package com.laboratorio.services.menu.impl;
 import com.laboratorio.dominio.Experimento;
 import com.laboratorio.dominio.Investigador;
 import com.laboratorio.dominio.ResultadoExperimento;
-import com.laboratorio.repository.investigador.InvestigadorRepository; 
+import com.laboratorio.repository.investigador.InvestigadorRepository;
 import com.laboratorio.services.experimento.IExperimentoService;
 import com.laboratorio.services.investigador.IInvestigadorService;
 import com.laboratorio.services.menu.IMenuService;
 import com.laboratorio.services.reporte.IReporteService;
 import com.laboratorio.utils.InputUtil;
 
-import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
-import java.util.Map;
 import java.util.Optional;
 
 public class MenuServicioImpl implements IMenuService {
@@ -24,10 +22,10 @@ public class MenuServicioImpl implements IMenuService {
     private final IReporteService reporteServicio;
     
     // Necesitamos el repositorio aquí para hacer búsquedas al crear experimentos
-    private final InvestigadorRepository investigadorRepository; 
+    private final InvestigadorRepository investigadorRepository;
 
-    public MenuServicioImpl(IInvestigadorService investigadorServicio, 
-                            IExperimentoService experimentoServicio, 
+    public MenuServicioImpl(IInvestigadorService investigadorServicio,
+                            IExperimentoService experimentoServicio,
                             IReporteService reporteServicio,
                             InvestigadorRepository investigadorRepository) {
         this.investigadorServicio = investigadorServicio;
@@ -38,10 +36,16 @@ public class MenuServicioImpl implements IMenuService {
 
     @Override
     public void iniciar() {
+        // 1. Mostramos el logo UNA SOLA VEZ, antes de que inicie el bucle.
+        mostrarLogo();
+        
         int opcion;
         do {
-            mostrarMenu();
+            // 2. Mostramos las opciones en CADA iteración del bucle.
+            mostrarOpcionesMenu();
             opcion = InputUtil.leerInt("Seleccione una opción: ");
+
+            limpiarConsola();
             
             switch (opcion) {
                 case 1: registrarInvestigador(); break;
@@ -54,12 +58,37 @@ public class MenuServicioImpl implements IMenuService {
                 case 0: System.out.println("Saliendo del sistema..."); break;
                 default: System.out.println("Opción no válida. Intente de nuevo.");
             }
-            System.out.println("----------------------------------------");
+            // Solo imprimimos un separador si la opción no es salir
+            if (opcion != 0) {
+                 System.out.println("----------------------------------------");
+            }
         } while (opcion != 0);
     }
+
+    private void limpiarConsola() {
+        System.out.print("\033[H\033[2J");
+        System.out.flush();
+    }
     
-    private void mostrarMenu() {
-        System.out.println("\n--- Laboratorio Chad - Sistema de Gestión ---");
+    /**
+     * Método que solo imprime el logo y el título principal.
+     */
+    private void mostrarLogo() {
+    String logo = " __       _                     _             _           ___ _               _ \n"
+        + "  / /  __ _| |__   ___  _ __ __ _| |_ ___  _ __(_) ___     / __\\ |__   __ _  __| |\n"
+        + " / /  / _` | '_ \\ / _ \\| '__/ _` | __/ _ \\| '__| |/ _ \\   / /  | '_ \\ / _` |/ _` |\n"
+        + "/ /__| (_| | |_) | (_) | | | (_| | || (_) | |  | | (_) | / /___| | | | (_| | (_| |\n"
+        + "\\____/\\__,_|_.__/ \\___/|_|  \\__,_|\\__\\___/|_|  |_|\\___/  \\____/|_| |_|\\__,_|\\__,_|\n"
+        + "                                                                                  \n";
+        System.out.println(logo);
+        System.out.println("=============================== Sistema de Gestion ===============================");
+    }
+
+    /**
+     * Método renombrado que solo muestra las opciones del menú.
+     */
+    private void mostrarOpcionesMenu() {
+        System.out.println("\n");
         System.out.println("1. Registrar Investigador");
         System.out.println("2. Registrar Experimento");
         System.out.println("3. Listar Experimentos");
@@ -68,6 +97,7 @@ public class MenuServicioImpl implements IMenuService {
         System.out.println("6. Generar Reporte General");
         System.out.println("7. Exportar Investigadores a CSV");
         System.out.println("0. Salir");
+        System.out.println("\n");
     }
 
 
@@ -154,7 +184,7 @@ public class MenuServicioImpl implements IMenuService {
 
     private void exportarInvestigadores() {
         System.out.println(">> 7. Exportar Investigadores a CSV");
-        String ruta = InputUtil.leerString("Ingrese la ruta del archivo (ej: investigadores.csv): ");
+        String ruta = InputUtil.leerString("Ingrese el nombre con el cual desea guardar el archivo: ");
         reporteServicio.exportarInvestigadoresCSV(ruta);
     }
 
